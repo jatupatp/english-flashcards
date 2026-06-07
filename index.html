@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Flashcards - ระบบสุ่มคำศัพท์</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 24px;
+        }
+
+        .counter {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .word {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .part-of-speech {
+            font-style: italic;
+            color: #718096;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .meaning {
+            font-size: 22px;
+            color: #e53e3e;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: none; /* ซ่อนคำแปลภาษาไทยไว้ก่อน */
+        }
+
+        .example {
+            font-size: 14px;
+            color: #4a5568;
+            background: #edf2f7;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            text-align: left;
+            line-height: 1.4;
+            display: none; /* ซ่อนประโยคตัวอย่างไว้ก่อน */
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.1s ease, background 0.2s ease;
+            flex: 1;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-reveal {
+            background: #4a5568;
+            color: white;
+        }
+
+        .btn-reveal:hover {
+            background: #2d3748;
+        }
+
+        .btn-next {
+            background: #3182ce;
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: #2b6cb0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>📝 English Flashcards</h1>
+        <div class="counter" id="vocab-count">คลังคำศัพท์: 0 คำ</div>
+        
+        <div class="card">
+            <div class="word" id="word">กำลังโหลด...</div>
+            <div class="part-of-speech" id="pos"></div>
+            <div class="meaning" id="meaning"></div>
+            <div class="example" id="example"></div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-reveal" onclick="revealAnswer()">ดูเฉลย (แปลไทย)</button>
+            <button class="btn-next" onclick="randomWord()">คำต่อไป</button>
+        </div>
+    </div>
+
+    <script>
+        // คลังคำศัพท์จัดเต็ม (คำศัพท์, ประเภทคำ, คำแปลไทย, ประโยคตัวอย่าง)
+        const vocabulary = [
+            { word: "Abandon", pos: "v.", meaning: "ละทิ้ง, ปล่อยปละละเลย", example: "The drivers were forced to abandon their cars in the snow." },
+            { word: "Abundant", pos: "adj.", meaning: "มากมาย, อุดมสมบูรณ์", example: "The river provides an abundant supply of fish." },
+            { word: "Accelerate", pos: "v.", meaning: "เร่งความเร็ว, เร่งให้เกิดขึ้น", example: "We need to accelerate the economic growth." },
+            { word: "Accomplish", pos: "v.", meaning: "ทำสำเร็จ, บรรลุเป้าหมาย", example: "You can accomplish anything if you work hard." },
+            { word: "Accumulate", pos: "v.", meaning: "สะสม, เก็บรวบรวม", example: "Dust quickly accumulates if we don't clean the room." },
+            { word: "Accurate", pos: "adj.", meaning: "ถูกต้อง, แม่นยำ", example: "The computer model can provide accurate weather forecasts." },
+            { word: "Advantage", pos: "n.", meaning: "ข้อได้เปรียบ, ผลประโยชน์", example: "Living in a big city has many advantages." },
+            { word: "Advocate", pos: "v. / n.", meaning: "สนับสนุน, ผู้สนับสนุน", example: "He is a strong advocate for human rights." },
+            { word: "Alternative", pos: "n. / adj.", meaning: "ทางเลือก, ซึ่งเลือกได้", example: "We need to find an alternative energy source." },
+            { word: "Ambiguous", pos: "adj.", meaning: "กำกวม, คลุมเครือ", example: "His reply to my question was somewhat ambiguous." },
+            { word: "Analyze", pos: "v.", meaning: "วิเคราะห์", example: "The scientists will analyze the blood samples." },
+            { word: "Annual", pos: "adj.", meaning: "ประจำปี, ทุกปี", example: "The company holds its annual meeting in December." },
+            { word: "Appreciate", pos: "v.", meaning: "เห็นคุณค่า, ซาบซึ้งใจ", example: "I really appreciate your help with this project." },
+            { word: "Approach", pos: "v. / n.", meaning: "เข้าใกล้, วิธีการเข้าถึง", example: "We
