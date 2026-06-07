@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Flashcards - ระบบสุ่มคำศัพท์</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .word {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .part-of-speech {
+            font-style: italic;
+            color: #718096;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .meaning {
+            font-size: 22px;
+            color: #38a169;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: none; /* ซ่อนคำแปลไว้ก่อน */
+        }
+
+        .example {
+            font-size: 14px;
+            color: #4a5568;
+            background: #edf2f7;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            display: none; /* ซ่อนประโยคตัวอย่างไว้ก่อน */
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.1s ease, background 0.2s ease;
+            flex: 1;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-reveal {
+            background: #4a5568;
+            color: white;
+        }
+
+        .btn-reveal:hover {
+            background: #2d3748;
+        }
+
+        .btn-next {
+            background: #3182ce;
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: #2b6cb0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>📝 English Flashcards</h1>
+        
+        <div class="card">
+            <div class="word" id="word">Loading...</div>
+            <div class="part-of-speech" id="pos"></div>
+            <div class="meaning" id="meaning"></div>
+            <div class="example" id="example"></div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-reveal" onclick="revealAnswer()">ดูเฉลย</button>
+            <button class="btn-next" onclick="randomWord()">คำต่อไป</button>
+        </div>
+    </div>
+
+    <script>
+        // คลังคำศัพท์ (คุณสามารถเพิ่ม ลบ หรือแก้ไขคำศัพท์ตรงนี้ได้เลยครับ)
+        const vocabulary = [
+            { word: "Accomplish", pos: "v.", meaning: "ทำสำเร็จ, บรรลุเป้าหมาย", example: "You can accomplish anything if you work hard." },
+            { word: "Benevolent", pos: "adj.", meaning: "เมตตา, ใจดี", example: "The benevolent businessman donated money to the school." },
+            { word: "Challenge", pos: "n. / v.", meaning: "ความท้าทาย, ท้าทาย", example: "Learning a new language is a great challenge." },
+            { word: "Diligent", pos: "adj.", meaning: "ขยันหมั่นเพียร", example: "She is a diligent student who always finishes her homework." },
+            { word: "Evaluate", pos: "v.", meaning: "ประเมินผล", example: "The teacher will evaluate your performance tomorrow." },
+            { word: "Fluctuate", pos: "v.", meaning: "ผันผวน, ขึ้นๆ ลงๆ", example: "Gold prices fluctuate daily based on the market." },
+            { word: "Generous", pos: "adj.", meaning: "ใจกว้าง, โอบอ้อมอารี", example: "Thank you for your generous hospitality." },
+            { word: "Inevitable", pos: "adj.", meaning: "ซึ่งหลีกเลี่ยงไม่ได้", example: "Change is an inevitable part of life." },
+            { word: "Justify", pos: "v.", meaning: "พิสูจน์ว่าถูก, ให้เหตุผลประกอบ", example: "You don't need to justify your actions to me." },
+            { word: "Maintain", pos: "v.", meaning: "รักษาไว้, คงอยู่", example: "It is important to maintain a healthy lifestyle." }
+        ];
+
+        let currentWord = {};
+
+        function randomWord() {
+            // สุ่มคำศัพท์โดยไม่ให้ซ้ำกับคำเดิมทันที (ถ้ามีคำศัพท์มากกว่า 1 คำ)
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * vocabulary.length);
+            } while (vocabulary.length > 1 && vocabulary[randomIndex].word === currentWord.word);
+
+            currentWord = vocabulary[randomIndex];
+
+            // อัปเดตหน้าตาเว็บ และซ่อนเฉลยไว้ก่อน
+            document.getElementById("word").innerText = currentWord.word;
+            document.getElementById("pos").innerText = `(${currentWord.pos})`;
+            
+            const meaningEl = document.getElementById("meaning");
+            const exampleEl = document.getElementById("example");
+            
+            meaningEl.innerText = currentWord.meaning;
+            exampleEl.innerText = `Example: ${currentWord.example}`;
+
+            meaningEl.style.display = "none";
+            exampleEl.style.display = "none";
+        }
+
+        function revealAnswer() {
+            document.getElementById("meaning").style.display = "block";
+            document.getElementById("example").style.display = "block";
+        }
+
+        // เริ่มต้นเรียกคำแรกเมื่อเปิดเว็บ
+        randomWord();
+    </script>
+</body>
+</html>
