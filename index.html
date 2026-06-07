@@ -48,9 +48,9 @@
             background: #f8f9fa;
             border: 2px solid #e9ecef;
             border-radius: 15px;
-            padding: 40px 20px;
+            padding: 30px 20px;
             margin-bottom: 30px;
-            min-height: 220px;
+            min-height: 240px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -59,25 +59,26 @@
         }
 
         .word {
-            font-size: 36px;
+            font-size: 34px;
             font-weight: bold;
             color: #2d3748;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            word-break: break-word;
         }
 
         .part-of-speech {
             font-style: italic;
             color: #718096;
             margin-bottom: 15px;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .meaning {
-            font-size: 22px;
+            font-size: 20px;
             color: #e53e3e;
             font-weight: 600;
             margin-bottom: 15px;
-            display: none; /* ซ่อนคำแปลภาษาไทยไว้ก่อน */
+            display: none;
         }
 
         .example {
@@ -89,7 +90,8 @@
             width: 100%;
             text-align: left;
             line-height: 1.4;
-            display: none; /* ซ่อนประโยคตัวอย่างไว้ก่อน */
+            display: none;
+            white-space: pre-line;
         }
 
         .btn-group {
@@ -152,8 +154,8 @@
     </div>
 
     <script>
-        // คลังคำศัพท์จัดเต็ม (คำศัพท์, ประเภทคำ, คำแปลไทย, ประโยคตัวอย่าง)
         const vocabulary = [
+            // --- ชุดเดิม ---
             { word: "Abandon", pos: "v.", meaning: "ละทิ้ง, ปล่อยปละละเลย", example: "The drivers were forced to abandon their cars in the snow." },
             { word: "Abundant", pos: "adj.", meaning: "มากมาย, อุดมสมบูรณ์", example: "The river provides an abundant supply of fish." },
             { word: "Accelerate", pos: "v.", meaning: "เร่งความเร็ว, เร่งให้เกิดขึ้น", example: "We need to accelerate the economic growth." },
@@ -216,12 +218,291 @@
             { word: "Unanimous", pos: "adj.", meaning: "เป็นเอกฉันท์", example: "The committee reached a unanimous decision." },
             { word: "Validate", pos: "v.", meaning: "ตรวจสอบความถูกต้อง, ยืนยัน", example: "The test results validated our theory." },
             { word: "Vary", pos: "v.", meaning: "แตกต่างกันไป, เปลี่ยนแปลง", example: "Prices vary depending on the season." },
-            { word: "Vulnerable", pos: "adj.", meaning: "อ่อนแอ, เปราะบาง", example: "The elderly are particularly vulnerable to the virus." }
+            { word: "Vulnerable", pos: "adj.", meaning: "อ่อนแอ, เปราะบาง", example: "The elderly are particularly vulnerable to the virus." },
+
+            // --- เพิ่มใหม่อีก 200 คำ ---
+            { word: "Abolish", pos: "v.", meaning: "ยกเลิก, ล้มล้าง", example: "The government decided to abolish the unfair tax law." },
+            { word: "Abrupt", pos: "adj.", meaning: "ทันทีทันใด, ฉับพลัน", example: "The train came to an abrupt stop." },
+            { word: "Absorb", pos: "v.", meaning: "ดูดซับ, ซึมซับ", example: "Plants absorb nutrients and water from the soil." },
+            { word: "Abstract", pos: "adj.", meaning: "เป็นนามธรรม, เข้าใจยาก", example: "Beauty and truth are abstract concepts." },
+            { word: "Absurd", pos: "adj.", meaning: "ไร้สาระ, น่าหัวร่อ", example: "It is absurd to think that the world is flat." },
+            { word: "Acquire", pos: "v.", meaning: "ได้รับมา, ได้เรียนรู้", example: "She managed to acquire a good knowledge of English." },
+            { word: "Adapt", pos: "v.", meaning: "ปรับตัว, ปรับให้เหมาะสม", example: "We must adapt to the changing climate." },
+            { word: "Adequate", pos: "adj.", meaning: "เพียงพอ, เหมาะสม", example: "The space is adequate for a small office." },
+            { word: "Adjust", pos: "v.", meaning: "ปรับเปลี่ยน, ปรับตำแหน่ง", example: "You can adjust the height of the chair." },
+            { word: "Adminent", pos: "v.", meaning: "ยอมรับ, ให้เข้า", example: "He refused to admit that he was wrong." },
+            { word: "Adolescent", pos: "n. / adj.", meaning: "วัยรุ่น, เกี่ยวกับวัยรุ่น", example: "Adolescent behavior can be difficult to understand." },
+            { word: "Adopt", pos: "v.", meaning: "รับเลี้ยง, นำมาใช้", example: "The company decided to adopt a new strategy." },
+            { word: "Adore", pos: "v.", meaning: "รักอย่างลึกซึ้ง, เทิดทูน", example: "She adores her newborn grandchildren." },
+            { word: "Aesthetic", pos: "adj.", meaning: "เกี่ยวกับความงาม, สุนทรียศาสตร์", example: "The building has a unique aesthetic appeal." },
+            { word: "Affordable", pos: "adj.", meaning: "ราคาไม่แพง, ซื้อหาได้", example: "We are looking for an affordable apartment." },
+            { word: "Aggressive", pos: "adj.", meaning: "ก้าวร้าว, รุกราน", example: "The dog showed aggressive behavior toward strangers." },
+            { word: "Agriculture", pos: "n.", meaning: "เกษตรกรรม", example: "Most of the people in this region work in agriculture." },
+            { word: "Alarming", pos: "adj.", meaning: "น่าตกใจ, น่ากลัว", example: "There is an alarming increase in global temperatures." },
+            { word: "Allocate", pos: "v.", meaning: "จัดสรร, แบ่งส่วน", example: "The budget was allocated to different projects." },
+            { word: "Ambition", pos: "n.", meaning: "ความทะเยอทะยาน, ความมุ่งมั่น", example: "Her ambition is to become a famous doctor." },
+            { word: "Amend", pos: "v.", meaning: "แก้ไข, ปรับปรุงให้ดีขึ้น", example: "The law was amended to protect children's rights." },
+            { word: "Amusing", pos: "adj.", meaning: "ตลกขบขัน, น่าสนุก", example: "He told us an amusing story about his dog." },
+            { word: "Ancestruction", pos: "n.", meaning: "บรรพบุรุษ", example: "My ancestors came from China a century ago." },
+            { word: "Anxiety", pos: "n.", meaning: "ความวิตกกังวล", example: "Waiting for exam results caused a lot of anxiety." },
+            { word: "Apparent", pos: "adj.", meaning: "ที่เห็นได้ชัด, เด่นชัด", example: "It became apparent that the plan was failing." },
+            { word: "Applicant", pos: "n.", meaning: "ผู้สมัครงาน", example: "There were over a hundred applicants for the job." },
+            { word: "Appoint", pos: "v.", meaning: "แต่งตั้ง, นัดหมาย", example: "The committee appointed him as the new chairperson." },
+            { word: "Approval", pos: "n.", meaning: "การอนุมัติ, การความเห็นชอบ", example: "The project is pending approval from the manager." },
+            { word: "Artificial", pos: "adj.", meaning: "เทียม, ประดิษฐ์ขึ้นเอง", example: "This juice contains no artificial flavors." },
+            { word: "Aspiration", pos: "n.", meaning: "ความทะยานอยาก, ความปรารถนา", example: "He has aspirations to become a professional singer." },
+            { word: "Assemble", pos: "v.", meaning: "ประกอบเข้าด้วยกัน, รวมตัว", example: "The students assembled in the main hall." },
+            { word: "Assert", pos: "v.", meaning: "ยืนยัน, แสดงสิทธิ์", example: "She continued to assert her innocence." },
+            { word: "Asset", pos: "n.", meaning: "สินทรัพย์, สิ่งมีค่า", example: "Good communication skills are a major asset in business." },
+            { word: "Assign", pos: "v.", meaning: "มอบหมาย, กำหนดงาน", example: "The teacher will assign a new homework today." },
+            { word: "Assist", pos: "v.", meaning: "ช่วยเหลือ", example: "The AI assistant is ready to assist you with coding." },
+            { word: "Assume", pos: "v.", meaning: "ทึกทักเอา, สมมุติ", example: "Don't assume everything you read online is true." },
+            { word: "Assure", pos: "v.", meaning: "รับรอง, ให้ความมั่นใจ", example: "I can assure you that the data is perfectly safe." },
+            { word: "Astonish", pos: "v.", meaning: "ทำให้ประหลาดใจมาก", example: "Her rapid recovery astonished the doctors." },
+            { word: "Attach", pos: "v.", meaning: "แนบ, ติดกัน", example: "Please attach your photo to the application form." },
+            { word: "Attain", pos: "v.", meaning: "บรรลุเป้าหมาย, ได้รับมา", example: "She worked hard to attain her degree." },
+            { word: "Attempt", pos: "v. / n.", meaning: "พยายาม, ความพยายาม", example: "They will attempt to climb the mountain tomorrow." },
+            { word: "Attitude", pos: "n.", meaning: "ทัศนคติ", example: "A positive attitude can help you overcome failure." },
+            { word: "Attribute", pos: "v. / n.", meaning: "ถือว่าเป็นผลมาจาก, คุณลักษณะ", example: "Patience is an essential attribute for a good teacher." },
+            { word: "Auction", pos: "n. / v.", meaning: "การประมูล, ขายทอดตลาด", example: "The painting was sold at an art auction." },
+            { word: "Audience", pos: "n.", meaning: "ผู้ชม, ผู้ฟัง", example: "The audience clapped loudly after the performance." },
+            { word: "Authentic", pos: "adj.", meaning: "แท้จริง, ของแท้", example: "This restaurant serves authentic Italian food." },
+            { word: "Authority", pos: "n.", meaning: "ผู้มีอำนาจ, สิทธิ์ขาด", example: "The local authority decided to build a new park." },
+            { word: "Automate", pos: "v.", meaning: "ทำให้เป็นอัตโนมัติ", example: "Using robots can automate the manufacturing process." },
+            { word: "Avoid", pos: "v.", meaning: "หลีกเลี่ยง", example: "You should avoid driving during heavy rain." },
+            { word: "Awkward", pos: "adj.", meaning: "งุ่มง่าม, เคอะเขิน, กระอักกระอ่วน", example: "There was an awkward silence during the dinner." },
+            { word: "Banish", pos: "v.", meaning: "เนรเทศ, ขับไล่", example: "The king decided to banish the traitor from the country." },
+            { word: "Bankruptcy", pos: "n.", meaning: "การล้มละลาย", example: "The company was forced to declare bankruptcy." },
+            { word: "Barrier", pos: "n.", meaning: "อุปสรรค, สิ่งกีดขวาง", example: "Language barriers can make communication difficult." },
+            { word: "Beloved", pos: "adj.", meaning: "อันเป็นที่รัก", example: "The old man lost his beloved cat last week." },
+            { word: "Betray", pos: "v.", meaning: "ทรยศ, หักหลัง", example: "He promised never to betray his best friend." },
+            { word: "Bewilder", pos: "v.", meaning: "ทำให้สับสนงุนงง", example: "The complex instructions completely bewildered him." },
+            { word: "Bias", pos: "n.", meaning: "ความลำเอียง, อคติ", example: "The reporter was accused of showing bias in the article." },
+            { word: "Blunder", pos: "n. / v.", meaning: "ความผิดพลาดร้ายแรงจากความสะเพร่า", example: "The team lost the match because of a tactical blunder." },
+            { word: "Boast", pos: "v.", meaning: "คุยโตโอ้อวด", example: "He likes to boast about how much money he makes." },
+            { word: "Bold", pos: "adj.", meaning: "กล้าหาญ, โดดเด่นชัดเจน", example: "The designer used bold colors for the vintage project." },
+            { word: "Boundary", pos: "n.", meaning: "ขอบเขต, แนวเขต", example: "The river forms a natural boundary between the two countries." },
+            { word: "Brief", pos: "adj.", meaning: "สั้น, กระชับ", example: "Please give me a brief summary of the book." },
+            { word: "Brilliant", pos: "adj.", meaning: "ฉลาดปราดเปรื่อง, เจิดจ้า", example: "The young scientist came up with a brilliant idea." },
+            { word: "Brutal", pos: "adj.", meaning: "โหดร้าย, รุนแรง", example: "The winter weather can be quite brutal in this region." },
+            { word: "Burden", pos: "n.", meaning: "ภาระ, สิ่งหนักใจ", example: "Being the head of the household is a huge burden." },
+            { word: "Calamity", pos: "n.", meaning: "ภัยพิบัติ, ความหายนะ", example: "The earthquake was a great calamity for the city." },
+            { word: "Candidate", pos: "n.", meaning: "ผู้สมัครรับเลือกตั้ง/งาน", example: "She is the strongest candidate for the position." },
+            { word: "Casual", pos: "adj.", meaning: "ไม่เป็นทางการ, สบายๆ", example: "He wore casual clothes to the weekend party." },
+            { word: "Category", pos: "n.", meaning: "หมวดหมู่, ประเภท", example: "The books are divided into different categories." },
+            { word: "Cautious", pos: "adj.", meaning: "ระมัดระวัง, รอบคอบ", example: "You should be cautious when driving in slippery roads." },
+            { word: "Cease", pos: "v.", meaning: "หยุด, สิ้นสุด", example: "The company ordered the factory to cease production." },
+            { word: "Chaos", pos: "n.", meaning: "ความวุ่นวาย, ความโกลาหล", example: "The sudden blackouts caused chaos across the country." },
+            { word: "Charity", pos: "n.", meaning: "การกุศล, ความเอื้อเฟื้อ", example: "All the money raised will be given to a local charity." },
+            { word: "Charm", pos: "n. / v.", meaning: "เสน่ห์, ดึงดูดใจ", example: "The historic town has a lot of vintage charm." },
+            { word: "Chronological", pos: "adj.", meaning: "ตามลำดับเวลา", example: "The history events are arranged in chronological order." },
+            { word: "Circulate", pos: "v.", meaning: "หมุนเวียน, แพร่กระจาย", example: "Rumors began to circulate about the company's financial state." },
+            { word: "Clarify", pos: "v.", meaning: "ทำให้กระจ่าง, อธิบายเพิ่ม", example: "Could you clarify the last point you made?" },
+            { word: "Cognitive", pos: "adj.", meaning: "เกี่ยวกับการรับรู้/กระบวนการคิด", example: "Puzzles can improve cognitive skills in adults." },
+            { word: "Coincide", pos: "v.", meaning: "เกิดขึ้นพร้อมกัน, พ้องพร้อม", example: "The festival will coincide with the holiday weekend." },
+            { word: "Collapse", pos: "v. / n.", meaning: "พังทลาย, ทรุดลง", example: "The roof collapsed under the weight of the snow." },
+            { word: "Colleague", pos: "n.", meaning: "เพื่อนร่วมงาน", example: "I am going out for dinner with my colleagues tonight." },
+            { word: "Combine", pos: "v.", meaning: "รวมกัน, ผสมผสาน", example: "We can combine these two ideas to create a better product." },
+            { word: "Commence", pos: "v.", meaning: "เริ่มต้น", example: "The wedding ceremony will commence at 9:00 AM." },
+            { word: "Commitment", pos: "n.", meaning: "ความมุ่งมั่น, พันธสัญญา", example: "Success requires a lot of hard work and commitment." },
+            { word: "Commodity", pos: "n.", meaning: "สินค้าโภคภัณฑ์, ของซื้อของขาย", example: "Gold is a highly valuable global commodity." },
+            { word: "Compel", pos: "v.", meaning: "บังคับ, ขืนใจ", example: "Illness compelled him to stay in bed for a week." },
+            { word: "Compensate", pos: "v.", meaning: "ชดเชย, ทดแทน", example: "The airline compensated us for the delayed flight." },
+            { word: "Compete", pos: "v.", meaning: "แข่งขัน", example: "Ten teams will compete in the tournament next week." },
+            { word: "Competent", pos: "adj.", meaning: "มีความรู้ความสามารถ, มีคุณสมบัติพอ", example: "We need a competent web developer for this project." },
+            { word: "Complain", pos: "v.", meaning: "บ่น, ร้องเรียน", example: "Customers often complain about poor delivery service." },
+            { word: "Complex", pos: "adj.", meaning: "ซับซ้อน", example: "The human brain is a highly complex organ." },
+            { word: "Compliment", pos: "n. / v.", meaning: "คำชมเชย, ชม", example: "She gave him a nice compliment on his presentation." },
+            { word: "Comply", pos: "v.", meaning: "ปฏิบัติตาม (กฎเกณฑ์)", example: "All visitors must comply with the safety regulations." },
+            { word: "Component", pos: "n.", meaning: "ส่วนประกอบ, ชิ้นส่วน", example: "The engine has many small moving components." },
+            { word: "Compose", pos: "v.", meaning: "ประกอบขึ้น, แต่งเพลง", example: "Water is composed of hydrogen and oxygen." },
+            { word: "Compromise", pos: "v. / n.", meaning: "ประนีประนอม", example: "After hours of discussion, they finally reached a compromise." },
+            { word: "Conceal", pos: "v.", meaning: "ปกปิด, ซ่อนเร้น", example: "The thief tried to conceal the stolen money." },
+            { word: "Concede", pos: "v.", meaning: "ยอมรับ (ว่าพ่ายแพ้/จริง)", example: "He refused to concede that he had lost the game." },
+            { word: "Concentrate", pos: "v.", meaning: "ทำสมาธิ, จดจ่อ", example: "It is hard to concentrate on reading with loud music." },
+            { word: "Conclude", pos: "v.", meaning: "สรุป", example: "The report concluded that the project was a success." },
+            { word: "Concrete", pos: "adj. / n.", meaning: "ที่เป็นรูปธรรม, คอนกรีต", example: "We need concrete evidence before accusing someone." },
+            { word: "Condemn", pos: "v.", meaning: "ประณาม, ตัดสินโทษ", example: "The world leaders condemned the violent attack." },
+            { word: "Conduct", pos: "v. / n.", meaning: "จัดการ, ประพฤติตน", example: "The research team will conduct an experiment next month." },
+            { word: "Confess", pos: "v.", meaning: "สารภาพผิด", example: "The criminal finally decided to confess his crime." },
+            { word: "Confidence", pos: "n.", meaning: "ความมั่นใจ", example: "Speaking in public helped boost her confidence." },
+            { word: "Confidential", pos: "adj.", meaning: "ที่เป็นความลับ", example: "Please keep this medical information strictly confidential." },
+            { word: "Confirm", pos: "v.", meaning: "ยืนยัน", example: "The hotel called to confirm my reservation." },
+            { word: "Conflict", pos: "n. / v.", meaning: "ความขัดแย้ง, ขัดกัน", example: "The schedule conflict forced me to cancel the meeting." },
+            { word: "Confront", pos: "v.", meaning: "เผชิญหน้า", example: "You need to confront your fears to overcome them." },
+            { word: "Confusion", pos: "n.", meaning: "ความสับสน", example: "The change in flight times caused a lot of confusion." },
+            { word: "Congested", pos: "adj.", meaning: "แออัด, หนาแน่น (จราจร)", example: "The city streets are always congested during rush hour." },
+            { word: "Consensus", pos: "n.", meaning: "ความเห็นพ้องต้องกัน, มติชน", example: "The board members reached a consensus on the new budget." },
+            { word: "Consent", pos: "n. / v.", meaning: "การยินยอม, อนุญาต", example: "You cannot use personal data without the user's consent." },
+            { word: "Consist", pos: "v.", meaning: "ประกอบด้วย", example: "The test consists of fifty multiple-choice questions." },
+            { word: "Consistent", pos: "adj.", meaning: "สม่ำเสมอ, คงเส้นคงวา", example: "Consistent practice is the key to improving skills." },
+            { word: "Conspicuous", pos: "adj.", meaning: "ที่เห็นได้ชัดเจน, สะดุดตา", example: "The missing painting left a conspicuous empty space on the wall." },
+            { word: "Constant", pos: "adj.", meaning: "คงที่, ต่อเนื่องไม่หยุด", example: "He requires constant care due to his medical condition." },
+            { word: "Constituent", pos: "n.", meaning: "องค์ประกอบ, ส่วนประกอบสำคัญ", example: "Brake fluid is a vital constituent of a car's safety system." },
+            { word: "Consume", pos: "v.", meaning: "บริโภค, ใช้หมดไป", example: "Older computers consume more electricity than new models." },
+            { word: "Contaminate", pos: "v.", meaning: "ปนเปื้อน, ทำให้ไม่บริสุทธิ์", example: "Chemical waste can contaminate the local water supply." },
+            { word: "Contemplate", pos: "v.", meaning: "ไตร่ตรอง, พิจารณาอย่างละเอียด", example: "She is contemplating moving to another country for work." },
+            { word: "Contemporary", pos: "adj.", meaning: "ร่วมสมัย, ปัจจุบัน", example: "The museum exhibits both historical and contemporary art." },
+            { word: "Contradict", pos: "v.", meaning: "ขัดแย้งกับ, โต้แย้ง", example: "His actions often contradict his words." },
+            { word: "Contrast", pos: "n. / v.", meaning: "ความแตกต่างกันอย่างชัดเจน", example: "There is a sharp contrast between the two brothers." },
+            { word: "Controversial", pos: "adj.", meaning: "ซึ่งก่อให้เกิดความขัดแย้ง/เป็นที่ถกเถียง", example: "The referee made a controversial decision during the match." },
+            { word: "Convenient", pos: "adj.", meaning: "สะดวกสบาย", example: "The hotel is located in a highly convenient area." },
+            { word: "Conventional", pos: "adj.", meaning: "ตามแบบแผน, ตามธรรมเนียมนิยม", example: "We should look beyond conventional methods to find a solution." },
+            { word: "Convey", pos: "v.", meaning: "สื่อสาร, ถ่ายทอดความหมาย", example: "It is hard to convey deep emotions through text messages." },
+            { word: "Convince", pos: "v.", meaning: "โน้มน้าวใจ, ทำให้เชื่อ", example: "He tried to convince his partner to start a business." },
+            { word: "Cooperate", pos: "v.", meaning: "ร่วมมือกัน", example: "All departments need to cooperate to complete this task." },
+            { word: "Cope", pos: "v.", meaning: "รับมือ, จัดการปัญหา", example: "She learned how to cope with work-related stress." },
+            { word: "Cordial", pos: "adj.", meaning: "ด้วยความจริงใจ, อบอุ่น", example: "The host offered us a cordial welcome." },
+            { word: "Corporate", pos: "adj.", meaning: "เกี่ยวกับบริษัท/องค์กรใหญ่", example: "The company announced changes in corporate strategy." },
+            { word: "Corrupt", pos: "adj. / v.", meaning: "ทุจริต, ฉ้อฉล", example: "The journalist exposed the actions of corrupt politicians." },
+            { word: "Counterfeit", pos: "adj. / n.", meaning: "ปลอมแปลง, ของปลอม", example: "It is illegal to sell counterfeit designer goods." },
+            { word: "Courageous", pos: "adj.", meaning: "กล้าหาญ", example: "The courageous firefighter saved the family from the building." },
+            { word: "Criteria", pos: "n.", meaning: "เกณฑ์, บรรทัดฐาน", example: "What are the criteria for selecting the job applicants?" },
+            { word: "Criticize", pos: "v.", meaning: "วิพากษ์วิจารณ์, จับผิด", example: "It's easy to criticize others when you don't know the facts." },
+            { word: "Cure", pos: "v. / n.", meaning: "รักษาให้หาย, ยารักษาโรค", example: "Scientists are still looking for a cure for the disease." },
+            { word: "Curious", pos: "adj.", meaning: "อยากรู้อยากเห็น", example: "The puppy was curious about the new plants in the garden." },
+            { word: "Cynical", pos: "adj.", meaning: "ที่มองโลกในแง่ร้าย/เยาะหยัน", example: "She has a cynical attitude toward modern relationships." },
+            { word: "Deceive", pos: "v.", meaning: "หลอกลวง", example: "He tried to deceive his boss by changing the sales figures." },
+            { word: "Decisive", pos: "adj.", meaning: "เด็ดขาด, แน่วแน่", example: "A decisive manager can solve crises quickly." },
+            { word: "Decline", pos: "v. / n.", meaning: "ปฏิเสธ, ลดลง", example: "The demand for physical gold saw a slight decline." },
+            { word: "Dedicate", pos: "v.", meaning: "อุทิศตน, ทุ่มเท", example: "He dedicated his life to helping poor children." },
+            { word: "Defend", pos: "v.", meaning: "ปกป้อง, ป้องกัน", example: "The team worked hard to defend their title." },
+            { word: "Deficient", pos: "adj.", meaning: "ขาดแคลน, บกพร่อง", example: "A diet deficient in vitamins can cause health problems." },
+            { word: "Definite", pos: "adj.", meaning: "แน่นอน, ชัดเจน", example: "We need a definite answer by tomorrow morning." },
+            { word: "Deliberate", pos: "adj.", meaning: "จงใจ, เจตนา", example: "The police concluded that the fire was a deliberate act." },
+            { word: "Delightful", pos: "adj.", meaning: "น่าเพลิดเพลิน, น่าประทับใจ", example: "We had a delightful evening at the retro concert." },
+            { word: "Demonstrate", pos: "v.", meaning: "สาธิต, แสดงให้เห็น", example: "The trainer will demonstrate how to perform the exercise safely." },
+            { word: "Deny", pos: "v.", meaning: "ปฏิเสธ", example: "The suspect denied all accusations against him." },
+            { word: "Depart", pos: "v.", meaning: "ออกเดินทาง, จากไป", example: "The train is scheduled to depart at noon." },
+            { word: "Dependable", pos: "adj.", meaning: "พึ่งพาได้, ไว้ใจได้", example: "She is a highly dependable employee who never misses deadlines." },
+            { word: "Depress", pos: "v.", meaning: "ทำให้หดหู่, ทำให้ตกต่ำ", example: "Bad financial news can depress the stock market." },
+            { word: "Derive", pos: "v.", meaning: "ได้รับมาจาก, มีรากเหง้ามาจาก", example: "Many modern medicines are derived from plants." },
+            { word: "Desperate", pos: "adj.", meaning: "สิ้นหวัง, จนตรอก", example: "The company made a desperate attempt to avoid bankruptcy." },
+            { word: "Despise", pos: "v.", meaning: "รังเกียจ, ดูถูกดูแคลน", example: "He despises anyone who treats animals poorly." },
+            { word: "Deteriorate", pos: "v.", meaning: "เสื่อมโทรมลง, แย่ลง", example: "The weather conditions began to deteriorate quickly." },
+            { word: "Determine", pos: "v.", meaning: "กำหนด, ตัดสินใจแน่วแน่", example: "Hard work will determine your long-term success." },
+            { word: "Devastate", pos: "v.", meaning: "ทำลายล้าง, ทำให้ใจสลาย", example: "The natural disaster completely devastated the small town." },
+            { word: "Devote", pos: "v.", meaning: "สละเวลา, มอบความรักให้", example: "She devotes her weekends to water propagation of plants." },
+            { word: "Diagnose", pos: "v.", meaning: "วินิจฉัยโรค", example: "The doctor diagnosed him with high blood pressure." },
+            { word: "Differentiate", pos: "v.", meaning: "แยกแยะความแตกต่าง", example: "It is important to differentiate between facts and opinions." },
+            { word: "Dignity", pos: "n.", meaning: "ศักดิ์ศรี, ความสง่างาม", example: "Every human being deserves to be treated with dignity." },
+            { word: "Dilemma", pos: "n.", meaning: "ภาวะกลืนไม่เข้าคายไม่ออก, สถานการณ์ลำบาก", example: "He faced a dilemma between career growth and family time." },
+            { word: "Disappoint", pos: "v.", meaning: "ทำให้ผิดหวัง", example: "I am sorry to disappoint you, but the tickets are sold out." },
+            { word: "Disaster", pos: "n.", meaning: "ภัยพิบัติ, ความล่มจม", example: "The wedding turned into a disaster when it started to pour." },
+            { word: "Discipline", pos: "n.", meaning: "วินัย, การฝึกฝนตนเอง", example: "Learning code requires a lot of self-discipline." },
+            { word: "Disclose", pos: "v.", meaning: "เปิดเผยข้อมูล", example: "The investigator refused to disclose the details of the case." },
+            { word: "Discriminate", pos: "v.", meaning: "เลือกปฏิบัติ, เหยียด", example: "It is illegal to discriminate against employees based on gender." },
+            { word: "Disguise", pos: "v. / n.", meaning: "ปลอมตัว, ปิดบัง", example: "He disguised his voice over the phone to hide his identity." },
+            { word: "Dismiss", pos: "v.", meaning: "ไล่ออก, ไม่ใส่ใจ, ยกฟ้อง", example: "The boss decided to dismiss the employee for being late constantly." },
+            { word: "Display", pos: "v. / n.", meaning: "แสดง, จัดแสดง", example: "The web application can display information quickly." },
+            { word: "Dispute", pos: "n. / v.", meaning: "ข้อพิพาท, โต้แย้ง", example: "The two countries settled their border dispute peacefully." },
+            { word: "Disrupt", pos: "v.", meaning: "ขัดขวาง, ทำให้หยุดชะงัก", example: "Heavy snow disrupted the city's transport system." },
+            { word: "Distant", pos: "adj.", meaning: "ไกล, ห่างเหิน", example: "Stars are brilliant objects in the distant galaxy." },
+            { word: "Distinguish", pos: "v.", meaning: "จำแนกแจกแจง, แยกความต่าง", example: "The child can easily distinguish colors." },
+            { word: "Distort", pos: "v.", meaning: "บิดเบือน, ผิดรูปไป", example: "The media was accused of distorting the politician's words." },
+            { word: "Distract", pos: "v.", meaning: "ทำให้เสียสมาธิ/ไขว้เขว", example: "Loud notifications can distract you from work." },
+            { word: "Distress", pos: "n. / v.", meaning: "ความทุกข์ระทม, ความเจ็บปวด", example: "Financial problems can cause deep emotional distress." },
+            { word: "Dominate", pos: "v.", meaning: "ครอบงำ, ครองตลาด", example: "Major tech companies continue to dominate the global market." },
+            { word: "Drastic", pos: "adj.", meaning: "รุนแรง, เฉียบขาด, ทางการมาก", example: "The government took drastic measures to curb inflation." },
+            { word: "Dreadful", pos: "adj.", meaning: "น่ากลัวมาก, แย่มากๆ", example: "We had a dreadful experience at that poorly managed hotel." },
+            { word: "Durable", pos: "adj.", meaning: "ทนทาน, ยาวนาน", example: "These leather boots are highly durable." },
+            { word: "Dwell", pos: "v.", meaning: "อาศัยอยู่, หมกมุ่นคิดถึง", example: "Don't dwell on past mistakes; focus on the future." },
+            { word: "Eager", pos: "adj.", meaning: "กระตือรือร้น", example: "The young intern is eager to learn new skills." },
+            { word: "Eccentric", pos: "adj.", meaning: "แปลกประหลาด, วิตถาร", example: "The artist was known for his eccentric lifestyle." },
+            { word: "Economical", pos: "adj.", meaning: "ประหยัด, คุ้มค่าเงิน", example: "Buying a small car is more economical for city driving." },
+            { word: "Elaborate", pos: "adj. / v.", meaning: "ประณีต, ขยายความเพิ่มเติม", example: "Could you elaborate on your project proposal?" },
+            { word: "Elegant", pos: "adj.", meaning: "สง่างาม, ดูดีมีรสนิยม", example: "The dining room had an elegant layout." },
+            { word: "Eligible", pos: "adj.", meaning: "มีคุณสมบัติเหมาะสม", example: "Only citizens over 18 are eligible to vote." },
+            { word: "Eliminate", pos: "v.", meaning: "กำจัด, คัดออก", example: "Regular working out can help eliminate body fat." },
+            { word: "Eloquent", pos: "adj.", meaning: "มีวาทศิลป์, พูดจาจูงใจ", example: "He made an eloquent speech at the corporate meeting." },
+            { word: "Embark", pos: "v.", meaning: "เริ่มต้น (เดินทาง/ทำโปรเจกต์ใหม่)", example: "The company is ready to embark on a new digital project." },
+            { word: "Embrace", pos: "v.", meaning: "โอบกอด, ยอมรับรับมาใช้", example: "Businesses must embrace AI technology to stay competitive." },
+            { word: "Emerge", pos: "v.", meaning: "ปรากฏออกมา, เกิดขึ้น", example: "New challenges emerged during the software deployment." },
+            { word: "Eminent", pos: "adj.", meaning: "โดดเด่น, มีชื่อเสียงสูง", example: "She is an eminent doctor in the field of cancer research." },
+            { word: "Empathy", pos: "n.", meaning: "ความเข้าใจความรู้สึกผู้อื่น", example: "A good leader shows empathy toward team members." },
+            { word: "Empower", pos: "v.", meaning: "มอบอำนาจ, ให้สิทธิ์", example: "Education can empower young people to achieve their goals." },
+            { word: "Encounter", pos: "v. / n.", meaning: "เผชิญหน้า, พบเจอโดยบังเอิญ", example: "We might encounter unexpected problems during the project." },
+            { word: "Endure", pos: "v.", meaning: "อดทน, คงอยู่ยาวนาน", example: "The building managed to endure the severe earthquake." },
+            { word: "Enforce", pos: "v.", meaning: "บังคับใช้ (กฎหมาย/กฎเกณฑ์)", example: "The police are here to enforce safety regulations." },
+            { word: "Engage", pos: "v.", meaning: "มีส่วนร่วม, ดึงดูดความสนใจ", example: "Interactive games can engage social media users effectively." },
+            { word: "Enhance", pos: "v.", meaning: "ทำให้ดีขึ้น, พัฒนาขึ้น", example: "You can enhance your English by using flashcards." },
+            { word: "Enormous", pos: "adj.", meaning: "มหาศาล, ใหญ่โตมาก", example: "The new stadium requires an enormous budget." },
+            { word: "Ensure", pos: "v.", meaning: "รับรอง, ทำให้มั่นใจ", example: "Please double-check to ensure that the code is working." },
+            { word: "Enthusiastic", pos: "adj.", meaning: "กระตือรือร้น, คลั่งไคล้", example: "The fans were highly enthusiastic during the football match." },
+            { word: "Entire", pos: "adj.", meaning: "ทั้งหมด, ทั้งสิ้น", example: "The entire office celebrated the project's success." },
+            { word: "Entitle", pos: "v.", meaning: "ให้สิทธิ์, ตั้งชื่อ", example: "This ticket entitles you to a free lunch." },
+            { word: "Equivalent", pos: "adj. / n.", meaning: "เท่าเทียมกัน, สิ่งที่มีค่าเท่ากัน", example: "One ounce of gold weight is equivalent to about 31.1 grams." },
+            { word: "Eradicate", pos: "v.", meaning: "กำจัดจนสิ้นซาก, ถอนรากถอนโคน", example: "The organization aims to eradicate global poverty." },
+            { word: "Erect", pos: "v.", meaning: "สร้างขึ้น, ตั้งตรง", example: "The workers erected a temporary fence around the site." },
+            { word: "Erroneous", pos: "adj.", meaning: "ที่ผิดพลาด, ไม่ถูกต้อง", example: "The reporter had to correct the erroneous information." },
+            { word: "Escalate", pos: "v.", meaning: "บานปลาย, เพิ่มขึ้นอย่างรวดเร็ว", example: "The local dispute quickly escalated into a major conflict." },
+            { word: "Essential", pos: "adj.", meaning: "จำเป็นที่สุด, ขาดไม่ได้", example: "Water and sunlight are essential for plant propagation." },
+            { word: "Establish", pos: "v.", meaning: "จัดตั้ง, สร้างรากฐาน", example: "The company was established in 1995." },
+            { word: "Esteem", pos: "n. / v.", meaning: "ความเคารพยกย่อง", example: "The retired teacher is held in high esteem by his students." },
+            { word: "Estimate", pos: "v. / n.", meaning: "ประมาณการ, ประเมินค่า", example: "The engineer provided an estimate for the repair costs." },
+            { word: "Eternal", pos: "adj.", meaning: "ตลอดกาล, นิรันดร์", example: "True art has an eternal value." },
+            { word: "Ethical", pos: "adj.", meaning: "ตามหลักจริยธรรม, ศีลธรรม", example: "The company focuses on ethical sourcing of materials." },
+            { word: "Evade", pos: "v.", meaning: "หลบหนี, หลีกเลี่ยง (ภาษี/หน้าที่)", example: "The corrupt businessman tried to evade paying taxes." },
+            { word: "Evaluate", pos: "v.", meaning: "ประเมินผล", example: "The team will evaluate the product's performance tomorrow." },
+            { word: "Evident", pos: "adj.", meaning: "ชัดแจ้ง, เด่นชัด", example: "Her joy was evident from the smile on her face." },
+            { word: "Exaggerate", pos: "v.", meaning: "พูดเกินจริง", example: "Don't exaggerate the problem; it's easy to fix." },
+            { word: "Exceed", pos: "v.", meaning: "เกินกว่า, เกินกำหนด", example: "The total cost must not exceed the approved budget." },
+            { word: "Excellent", pos: "adj.", meaning: "ยอดเยี่ยม", example: "She did an excellent job on the visual storyboard." },
+            { word: "Exceptional", pos: "adj.", meaning: "เป็นพิเศษ, ยอดเยี่ยมเหนือธรรมดา", example: "The young developer showed exceptional coding skills." },
+            { word: "Excessive", pos: "adj.", meaning: "มากเกินไป, เกินพอดี", example: "Excessive consumption of sugar can lead to health issues." },
+            { word: "Exclude", pos: "v.", meaning: "ไม่รวมเข้าด้วยกัน, คัดออก", example: "The price excludes delivery fees." },
+            { word: "Exclusive", pos: "adj.", meaning: "เฉพาะตัว, เฉพาะกลุ่ม", example: "The journalist got an exclusive interview with the CEO." },
+            { word: "Execute", pos: "v.", meaning: "ดำเนินการ, บังคับคดี/ประหารชีวิต", example: "The team executed the business plan perfectly." },
+            { word: "Exhausted", pos: "adj.", meaning: "เหน็ดเหนื่อยเมื่อยล้ามาก", example: "I was completely exhausted after working out." },
+            { word: "Exhibit", pos: "v. / n.", meaning: "จัดแสดง, สิ่งจัดแสดง", example: "The company will exhibit its new AI tools at the expo." },
+            { word: "Exotic", pos: "adj.", meaning: "แปลกถิ่น, มาจากต่างประเทศ", example: "She loves collecting exotic plants like the ZZ Raven." },
+            { word: "Expand", pos: "v.", meaning: "ขยายตัว, แผ่กว้างออก", example: "The store plans to expand its business next year." },
+            { word: "Expectation", pos: "n.", meaning: "ความคาดหวัง", example: "The new film didn't live up to my expectations." },
+            { word: "Expedite", pos: "v.", meaning: "เร่งให้เร็วขึ้น", example: "We need to expedite the delivery process for customers." },
+            { word: "Expenditure", pos: "n.", meaning: "รายจ่าย, การใช้จ่าย", example: "The corporate expenditure increased significantly this quarter." },
+            { word: "Expertise", pos: "n.", meaning: "ความเชี่ยวชาญ", example: "She has expertise in digital interface design." },
+            { word: "Expire", pos: "v.", meaning: "หมดอายุ", example: "My credit card will expire at the end of this month." },
+            { word: "Explicit", pos: "adj.", meaning: "ชัดเจนแจ่มแจ้ง, ไม่คลุมเครือ", example: "He gave explicit instructions on how to use the computer." },
+            { word: "Exploit", pos: "v.", meaning: "แสวงหาประโยชน์, เอาเปรียบ", example: "Companies should not exploit their workers." },
+            { word: "Explore", pos: "v.", meaning: "สำรวจ, ค้นหา", example: "The team wants to explore new social media trends." },
+            { word: "Expose", pos: "v.", meaning: "เปิดเผยออกมา, สัมผัสโดน", example: "Do not expose the plant to direct, harsh sunlight." },
+            { word: "Expressive", pos: "adj.", meaning: "ที่แสดงความรู้สึกออกมาชัดเจน", example: "The character design has highly expressive eyes." },
+            { word: "Extend", pos: "v.", meaning: "ขยายเวลา, ยืดออกไป", example: "The manager agreed to extend the deadline by a week." },
+            { word: "Extensive", pos: "adj.", meaning: "กว้างขวาง, ครอบคลุมมาก", example: "The fire caused extensive damage to the warehouse." },
+            { word: "Extract", pos: "v. / n.", meaning: "สกัดออกมา, ข้อความที่คัดมา", example: "They extract oil from olives to make cooking oil." },
+            { word: "Extraordinary", pos: "adj.", meaning: "ไม่ธรรมดา, วิเศษอย่างยิ่ง", example: "He achieved extraordinary results in the sales competition." },
+            { word: "Extravagant", pos: "adj.", meaning: "ฟุ่มเฟือย, สุรุ่ยสุร่าย", example: "Her extravagant lifestyle led her into massive debt." },
+            { word: "Fabricate", pos: "v.", meaning: "กุเรื่องปลอมขึ้นมา, ผลิตชิ้นส่วน", example: "He fabricated a story to justify his absence." },
+            { word: "Facilitate", pos: "v.", meaning: "อำนวยความสะดวก", example: "The new software will facilitate team collaboration." },
+            { word: "Fascinating", pos: "adj.", meaning: "น่าหลงใหล, น่าสนใจมากๆ", example: "I found the history of the economic system fascinating." },
+            { word: "Fatal", pos: "adj.", meaning: "ถึงแก่ชีวิต, ร้ายแรงมาก", example: "The driver suffered fatal injuries in the accident." },
+            { word: "Feasible", pos: "adj.", meaning: "เป็นไปได้ในทางปฏิบัติ", example: "Is it feasible to complete this game project in a month?" },
+            { word: "Feeble", pos: "adj.", meaning: "อ่อนแอ, ปวกเปียก", example: "The old man made a feeble attempt to stand up." },
+            { word: "Fierce", pos: "adj.", meaning: "ดุเดือด, รุนแรง", example: "There is fierce competition between the two tech companies." },
+            { word: "Financial", pos: "adj.", meaning: "ทางการเงิน", example: "The Fed interest rate policy affects financial markets." },
+            { word: "Flawless", pos: "adj.", meaning: "ไม่มีที่ติ, สมบูรณ์แบบ", example: "Her performance in the test was absolutely flawless." },
+            { word: "Flee", pos: "v.", meaning: "หลบหนี", example: "The thieves fled the bank before the police arrived." },
+            { word: "Flexible", pos: "adj.", meaning: "ยืดหยุ่นได้", example: "Working from home offers flexible hours." },
+            { word: "Fluctuate", pos: "v.", meaning: "ผันผวน, ขึ้นๆ ลงๆ", example: "Gold spot prices fluctuate daily based on global events." },
+            { word: "Forbid", pos: "v.", meaning: "ห้าม", example: "The store policy forbids smoking inside." },
+            { word: "Forecast", pos: "v. / n.", meaning: "พยากรณ์, คาดการณ์", example: "Experts forecast an increase in oil prices next month." },
+            { word: "Formidable", pos: "adj.", meaning: "น่าเกรงขาม, ยากจะเอาชนะ", example: "Manchester United faced a formidable opponent yesterday." },
+            { word: "Fragile", pos: "adj.", meaning: "เปราะบาง, แตกหักง่าย", example: "Please handle this glass vase carefully; it is fragile." },
+            { word: "Frequent", pos: "adj.", meaning: "บ่อยครั้ง, ถี่", example: "He makes frequent trips to the city for business." },
+            { word: "Furious", pos: "adj.", meaning: "โกรธจัด, ดุดัน", example: "The boss was furious when he discovered the mistake." },
+            { word: "Futile", pos: "adj.", meaning: "ไร้ประโยชน์, เปล่าประโยชน์", example: "It is futile to argue with someone who won't listen." },
+            { word: "Generous", pos: "adj.", meaning: "ใจกว้าง, โอบอ้อมอารี", example: "Thank you for your generous financial support." },
+            { word: "Genuine", pos: "adj.", meaning: "แท้จริง, ไม่ปลอม", example: "This jacket is made of genuine leather." },
+            { word: "Gloom", pos: "n.", meaning: "ความมืดมน, ความเศร้าใจ", example: "A feeling of gloom spread over the office after the bad news." },
+            { word: "Graceful", pos: "adj.", meaning: "สง่างาม, นุ่มนวล", example: "The dancer moved in a graceful manner." },
+            { word: "Grave", pos: "adj. / n.", meaning: "ร้ายแรง/หลุมฝังศพ", example: "The doctor expressed grave concern about his health." },
+            { word: "Grievance", pos: "n.", meaning: "ความคับข้องใจ, เรื่องร้องเรียน", example: "Employees can file a grievance with the HR manager." },
+            { word: "Guarantee", pos: "v. / n.", meaning: "รับประกัน, คำมั่นสัญญา", example: "The product comes with a one-year guarantee." }
         ];
 
         let currentWord = {};
 
-        // แสดงจำนวนคำศัพท์ทั้งหมด
+        // แสดงจำนวนคำศัพท์ทั้งหมดในระบบ
         document.getElementById("vocab-count").innerText = `คลังคำศัพท์: ${vocabulary.length} คำ`;
 
         function randomWord() {
@@ -250,6 +531,7 @@
             document.getElementById("example").style.display = "block";
         }
 
+        // เริ่มต้นสุ่มคำแรก
         randomWord();
     </script>
 </body>
